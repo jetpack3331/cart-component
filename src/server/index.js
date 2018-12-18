@@ -1,13 +1,58 @@
-import express from 'express';
-import http from 'http';
+const express = require('express');
+const http = require('http');
+const morgan = require('morgan');
+const cors = require('cors');
+const HttpStatus = require('http-status');
 
-import routes from './routes';
+const routes = require('./routes');
 
 const app = express();
 const server = http.createServer(app);
 
+const PORT = 80;
+
+app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms'));
+
+app.use((req, res, next) => {
+    // if we have an options request (preflight), send 200 and set some headers
+    if (req.method === 'OPTIONS') {
+        const headers = {};
+        headers['Access-Control-Allow-Origin'] = '*';
+        headers['Access-Control-Allow-Methods'] = 'POST, PATCH, PUT, GET, PUT, DELETE, OPTIONS';
+        headers['Access-Control-Allow-Credentials'] = false;
+        headers['Access-Control-Max-Age'] = '86400'; // 24 hours
+        headers['Access-Control-Allow-Headers'] = 'Authorization, X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept';
+        res.writeHead(HttpStatus.OK, headers);
+        res.end();
+    } else {
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+
+        next();
+    }
+});
+
+// CORS setup
+const allowedDomains = [
+    `http://localhost:${process.env.CLIENT_PORT || 3000}`
+];
+const corsOptions = {
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    origin (origin, callback) {
+        if (allowedDomains.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    }
+};
+
+app.use(cors(corsOptions));
+
+// Routes setup
 app.use('/api/', routes);
 
 server
-    .listen(80)
-    .then(() => console.log('Server is running'));
+    .listen(PORT, () => {
+        console.log(`Server is running on port ${PORT}`)
+    })    

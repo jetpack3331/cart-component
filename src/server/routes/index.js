@@ -1,9 +1,9 @@
-import express from 'express';
+const express = require('express');
 
-import cartRoutes from './cart';
+const cartRoutes = require('./cart');
 
 const router = express.Router();
 
 router.use(cartRoutes);
 
-export default router;
+module.exports = router;

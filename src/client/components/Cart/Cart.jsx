@@ -1,15 +1,39 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
+import { getProducts } from '../../actions/cart';
+
+import ProductList from '../ProductList/ProductList';
 import './Cart.scss';
 
 class Cart extends Component {
+    componentDidMount() {
+        this.props.getProducts();
+    }
+
     render() {
+        const { products } = this.props;
+
         return (
-            <div>Cart component</div>
+            <React.Fragment>
+                <div>Cart component</div>
+                <ProductList products={products} />
+            </React.Fragment>
         )
     }
 }
 
-Cart.propTypes = {};
+Cart.propTypes = {
+    getProducts: PropTypes.func.isRequired
+};
 
-export default Cart;
+const mapStateToProps = state => ({
+    products: state.cart.data
+});
+
+const mapActionsToProps = {
+    getProducts
+};
+
+export default connect(mapStateToProps, mapActionsToProps)(Cart);
