@@ -13,6 +13,6 @@ React, Redux, Axios, Express, Faker
 
 ## Allowed comands
 
-- `yarn start` - run the development server
+- `yarn dev` - run the development server
 - `yarn build` = build production build
-- `yarn api` - run Express API
+- `yarn start` - run Express API and server static files from build and the API
