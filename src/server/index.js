@@ -36,7 +36,8 @@ app.use((req, res, next) => {
 });
 
 const allowedDomains = [
-    `http://localhost:${process.env.CLIENT_PORT || 3000}`
+    `http://localhost:${process.env.CLIENT_PORT || 3000}`,
+    'http://localhost:5000'
 ];
 const corsOptions = {
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',

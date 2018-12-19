@@ -30,6 +30,13 @@ class Cart extends Component {
         }
     }
 
+    handleSubmit() {
+        this.props.submitCart()
+            .then(() => {
+                alert('Cart submitted');
+            });
+    }
+
     render() {
         const {
             products,
@@ -38,25 +45,27 @@ class Cart extends Component {
             submitCart
         } = this.props;
 
+        const submittable = products.length > 0;
+
         return (
             <div className="container cart">
                 <h2>
-                    {products.length > 0 ? `Cart (${products.length})` : 'Cart is empty'}
+                    {submittable > 0 ? `Cart (${products.length})` : 'Cart is empty'}
                 </h2>
 
                 {loading && <div>Loading products...</div>}
                 {/** @TODO: add reloading button */}
                 {error && <div>Error with loading the products</div>}
 
-                <ProductList products={products} />                
+                {submittable && <ProductList products={products} />}
 
                 <div className="total d-flex-inline">
                     <div className="justify-content-start">
                         Total price: <Price {...this.clalculateTotalPrice(products)}  />
                     </div>
-                    <div className="justify-content-end">                        
-                        <button disabled={products.length === 0} onClick={() => submitCart()} className="btn btn-success">Submit</button>
-                    </div>
+                    {submittable && <div className="justify-content-end">                        
+                        <button disabled={!submittable} onClick={() => this.handleSubmit()} className="btn btn-success">Submit</button>
+                    </div>}
                 </div>
             </div>
         )

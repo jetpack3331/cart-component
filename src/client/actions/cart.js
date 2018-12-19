@@ -71,14 +71,15 @@ export function submitCart() {
 
         const products = getState().cart.data;
 
-        axios.post(`${API_URL}/submit`, products.map(p => ({
+        return axios.post(`${API_URL}/submit`, products.map(p => ({
             id: p.id,
             quantity: p.quantity
         })))
             .then(() => {
-                return dispatch({
+                dispatch({
                     type: SUBMIT_SUCCESS
                 });
+                return dispatch(clearAll());
             })
             .catch(error => {
                 return dispatch({
