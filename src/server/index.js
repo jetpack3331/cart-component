@@ -11,7 +11,7 @@ const routes = require('./routes');
 const app = express();
 const server = http.createServer(app);
 
-const PORT = 80;
+const PORT = process.env.PORT || 80;
 
 // Logger setup
 app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms'));
