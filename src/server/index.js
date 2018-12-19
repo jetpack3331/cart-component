@@ -3,6 +3,7 @@ const http = require('http');
 const morgan = require('morgan');
 const cors = require('cors');
 const HttpStatus = require('http-status');
+const bodyParser = require('body-parser');
 
 const routes = require('./routes');
 
@@ -49,6 +50,11 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+
+// Parser for JSON body
+app.use(bodyParser.json({
+    limit: '5mb'
+}));
 
 // Routes setup
 app.use('/api/', routes);

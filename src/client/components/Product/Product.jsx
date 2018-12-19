@@ -7,13 +7,15 @@ import {
     removeProduct
 } from '../../actions/cart';
 
-import {
-    Button
-} from 'reactstrap';
 import Price from '../Price/Price';
 import './Product.scss';
 
 class Product extends Component {
+    handleChangeQuantity(event) {
+        const value = parseInt(event.target.value);
+        this.props.changeQuantity(this.props.id, isNaN(value) ? '' : value);
+    }
+
     render() {
         const {
             name,
@@ -24,8 +26,7 @@ class Product extends Component {
             description,
             image,
             quantity,
-            removeProduct,
-            changeQuantity
+            removeProduct
         } = this.props;
 
         return (
@@ -35,12 +36,14 @@ class Product extends Component {
                 </td>
                 <td>
                     {name}
+                    <br />
+                    <span className="text-muted">{description}</span>
                 </td>
                 <td>
                     <dl>
-                        {Object.keys(attributes).map((name) => [
-                            <dt>{name}</dt>,
-                            <dd>{attributes[name]}</dd>
+                        {Object.keys(attributes).map((name, key) => [
+                            <dt key={`product-attr-name-${name}`}>{name}</dt>,
+                            <dd key={`product-attr-val-${key}`}>{attributes[name]}</dd>
                         ])}
                     </dl>                    
                 </td>
@@ -48,13 +51,23 @@ class Product extends Component {
                     <Price {...pricePerUnit} />
                 </td>
                 <td>
-                    <input min={1} onChange={e => changeQuantity(id, parseInt(e.target.value))} type="number" value={quantity} />
+                    <input
+                        min={1}
+                        type="number"
+                        onChange={e => this.handleChangeQuantity(e)}
+                        value={quantity}
+                    />
                 </td>
                 <td>
                     <Price className="price" {...price} />    
                 </td>
                 <td>
-                    <Button size="small" className="remove-btn" color="danger" onClick={() => removeProduct(id)}>Remove</Button>
+                    <button
+                        size="small"
+                        className="remove-btn btn btn-danger"
+                        onClick={() => removeProduct(id)}>
+                        Remove
+                    </button>
                 </td>
             </tr>
         )

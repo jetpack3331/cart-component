@@ -72,7 +72,7 @@ router
 
         // @TODO: Submit somewhere the cart data
         // Just return the content of the cart
-        return res.json(req.data);
+        return res.json(req.body);
     });
 
 module.exports = router;

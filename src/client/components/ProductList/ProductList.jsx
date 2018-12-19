@@ -3,9 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Product from '../Product/Product';
-import {
-    Row
-} from 'reactstrap';
 import './ProductList.scss';
 
 class ProductList extends Component {
@@ -13,7 +10,7 @@ class ProductList extends Component {
         const { products } = this.props;
 
         return (
-            <Row>
+            <div className="row">
                 <table className="table table-hovered">
                     <thead>
                         <tr className="unstylled">
@@ -29,7 +26,7 @@ class ProductList extends Component {
                         {products.map(product => <Product key={`product-${product.id}`} {...product} />)}
                     </tbody>
                 </table>
-            </Row>
+            </div>
         )
     }
 }
