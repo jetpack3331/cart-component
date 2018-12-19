@@ -2,6 +2,7 @@ const express = require('express');
 const http = require('http');
 const morgan = require('morgan');
 const cors = require('cors');
+const path = require('path');
 const HttpStatus = require('http-status');
 const bodyParser = require('body-parser');
 
@@ -14,6 +15,9 @@ const PORT = 80;
 
 // Logger setup
 app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms'));
+
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, '/../../build')));
 
 // CORS setup
 app.use((req, res, next) => {
@@ -35,18 +39,11 @@ app.use((req, res, next) => {
     }
 });
 
-const allowedDomains = [
-    `http://localhost:${process.env.CLIENT_PORT || 3000}`,
-    'http://localhost:5000'
-];
 const corsOptions = {
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     origin (origin, callback) {
-        if (allowedDomains.indexOf(origin) !== -1) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
+        // Allow all origins
+        callback(null, true);
     }
 };
 
