@@ -1,0 +1,30 @@
+@import '~bootstrap/scss/bootstrap.scss';
+@import "../../styles/variables.scss";
+
+.product {
+    img {
+        margin: $app-spacer * 2;
+        width: 80px;
+    }
+
+    input {
+        width: 50px;
+    }
+
+    .controls {
+        margin-top: $app-spacer;
+
+        .price {
+            margin-left: $app-spacer;
+            padding-top: $app-spacer;
+        }
+    
+        .quantity {
+            margin: $app-spacer;
+        }
+    
+        .remove-btn {
+            
+        }
+    }    
+}

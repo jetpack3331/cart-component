@@ -11,8 +11,10 @@ const server = http.createServer(app);
 
 const PORT = 80;
 
+// Logger setup
 app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms'));
 
+// CORS setup
 app.use((req, res, next) => {
     // if we have an options request (preflight), send 200 and set some headers
     if (req.method === 'OPTIONS') {
@@ -32,7 +34,6 @@ app.use((req, res, next) => {
     }
 });
 
-// CORS setup
 const allowedDomains = [
     `http://localhost:${process.env.CLIENT_PORT || 3000}`
 ];

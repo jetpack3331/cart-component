@@ -13,7 +13,7 @@ const db = {
 // Use faker to generate the faked data
 
 for (let i = 0; i < 5; i++) {
-    const priceInUSD = faker.commerce.price(.10,5.00,2);
+    const priceInUSD = parseFloat(faker.commerce.price(.10,5.00,2));
 
     db.products.push({
         name: faker.commerce.productName(),
@@ -30,7 +30,9 @@ for (let i = 0; i < 5; i++) {
             color: faker.commerce.color(),
             material: faker.commerce.productMaterial()
         },
-        id: faker.random.uuid()
+        id: faker.random.uuid(),
+        image: faker.image.food(),
+        description: faker.lorem.sentence()
     });
 }
 
@@ -70,7 +72,7 @@ router
 
         // @TODO: Submit somewhere the cart data
         // Just return the content of the cart
-        return req.json()
+        return res.json(req.data);
     });
 
 module.exports = router;

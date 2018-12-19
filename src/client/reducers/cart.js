@@ -2,9 +2,9 @@ import {
     GET_PRODUCTS_START,
     GET_PRODUCTS_SUCCESS,
     GET_PRODUCTS_ERROR,
-    INCREASE_QUANTITY,
-    DECREASE_QUANTITY,
-    REMOVE_PRODUCT
+    CHANGE_QUANTITY,
+    REMOVE_PRODUCT,
+    CLEAR_ALL
 } from '../constants/cart';
 
 const initialState = {
@@ -36,9 +36,9 @@ export default function cart(state = initialState, action = {}) {
         case REMOVE_PRODUCT:
             return {
                 ...state,
-                products: state.data.filter(p => p.id !== action.id)
+                data: state.data.filter(p => p.id !== action.id)
             };
-        case INCREASE_QUANTITY:
+        case CHANGE_QUANTITY:
             return {
                 ...state,
                 data: state.data.map(p => {
@@ -46,40 +46,20 @@ export default function cart(state = initialState, action = {}) {
                         return p;
                     }
                     
-                    // Increase new quantity of product
-                    const newQuantity = p.quantity++;
                     return {
                         ...p,
-                        quantity: newQuantity,
+                        quantity: action.quantity,
                         price: {
                             ...p.price,
-                            amount: p.pricePerUnit.price * newQuantity
+                            amount: p.pricePerUnit.amount * action.quantity
                         }
                     }
                 })
             };
-        case DECREASE_QUANTITY:
+        case CLEAR_ALL:
             return {
                 ...state,
-                data: state.data.map(p => {
-                    if (p.id !== action.id) {
-                        return p;
-                    }
-                    
-                    // Decrease new quantity of product
-                    // Check if product can be decreased is done in the component.
-                    // So not needed here
-                    // In case: p.quantity < 1 ? 1 : p.quantity--
-                    const newQuantity = p.quantity--;
-                    return {
-                        ...p,
-                        quantity: newQuantity,
-                        price: {
-                            ...p.price,
-                            amount: p.pricePerUnit.price * newQuantity
-                        }
-                    }
-                })
+                data: initialState.data
             }
         default:
             return state;

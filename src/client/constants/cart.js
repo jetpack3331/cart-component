@@ -8,7 +8,6 @@ export const SUBMIT_SUCCESS = 'cart/SUBMIT_SUCCESS';
 export const SUBMIT_ERROR = 'cart/SUBMIT_ERROR'; 
 
 // Sync calls
-export const INCREASE_QUANTITY = 'cart/INCREASE_QUANTITY';
-export const DECREASE_QUANTITY = 'cart/DECREASE_QUANTITY';
-
+export const CHANGE_QUANTITY = 'cart/CHANGE_QUANTITY';
 export const REMOVE_PRODUCT = 'cart/REMOVE_PRODUCT';
+export const CLEAR_ALL = 'cart/CLEAR_ALL';

@@ -4,9 +4,12 @@ import {
     GET_PRODUCTS_START,
     GET_PRODUCTS_SUCCESS,
     GET_PRODUCTS_ERROR,
-    INCREASE_QUANTITY,
-    DECREASE_QUANTITY,
-    REMOVE_PRODUCT
+    CHANGE_QUANTITY,
+    REMOVE_PRODUCT,
+    CLEAR_ALL,
+    SUBMIT,
+    SUBMIT_SUCCESS,
+    SUBMIT_ERROR
 } from '../constants/cart';
 
 const API_URL = 'http://localhost/api/cart';
@@ -19,6 +22,12 @@ export function getProducts() {
 
         return axios.get(`${API_URL}/products`)
             .then(products => {
+                // setTimeout(() => {
+                //     return dispatch({
+                //         type: GET_PRODUCTS_SUCCESS,
+                //         data: products.data
+                //     })
+                // }, 1500);
                 return dispatch({
                     type: GET_PRODUCTS_SUCCESS,
                     data: products.data
@@ -33,17 +42,11 @@ export function getProducts() {
     }
 }
 
-export function decreaseQuantity(id) {
+export function changeQuantity(id, quantity) {
     return {
-        type: DECREASE_QUANTITY,
-        id
-    }
-}
-
-export function increaseQuantity(id) {
-    return {
-        type: INCREASE_QUANTITY,
-        id
+        type: CHANGE_QUANTITY,
+        id,
+        quantity
     }
 }
 
@@ -51,5 +54,37 @@ export function removeProduct(id) {
     return {
         type: REMOVE_PRODUCT,
         id
+    }
+}
+
+export function clearAll() {
+    return {
+        type: CLEAR_ALL
+    };
+}
+
+export function submitCart() {
+    return (dispatch, getState) => {
+        dispatch({
+            type: SUBMIT
+        })
+
+        const products = getState().cart.data;
+
+        axios.post(`${API_URL}/submit`, products.map(p => ({
+            id: p.id,
+            quantity: p.quantity
+        })))
+            .then(() => {
+                return dispatch({
+                    type: SUBMIT_SUCCESS
+                });
+            })
+            .catch(error => {
+                return dispatch({
+                    type: SUBMIT_ERROR,
+                    error
+                });
+            })
     }
 }

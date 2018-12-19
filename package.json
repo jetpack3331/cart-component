@@ -4,7 +4,8 @@
   "private": true,
   "devDependencies": {
     "faker": "^4.1.0",
-    "morgan": "^1.9.1"
+    "morgan": "^1.9.1",
+    "node-sass": "^4.11.0"
   },
   "dependencies": {
     "axios": "^0.18.0",

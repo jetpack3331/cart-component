@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Product from '../Product/Product';
-
+import {
+    Row
+} from 'reactstrap';
 import './ProductList.scss';
 
 class ProductList extends Component {
@@ -11,9 +13,23 @@ class ProductList extends Component {
         const { products } = this.props;
 
         return (
-            <React.Fragment>
-                {products.map(product => <Product key={`product-${product.id}`} {...product} />)}
-            </React.Fragment>
+            <Row>
+                <table className="table table-hovered">
+                    <thead>
+                        <tr className="unstylled">
+                            <td></td>
+                            <td>Name</td>
+                            <td>Attributes</td>
+                            <td>Price</td>
+                            <td>Quantity</td>
+                            <td>Total</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {products.map(product => <Product key={`product-${product.id}`} {...product} />)}
+                    </tbody>
+                </table>
+            </Row>
         )
     }
 }
