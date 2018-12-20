@@ -12,7 +12,8 @@ import {
     SUBMIT_ERROR
 } from '../constants/cart';
 
-const API_URL = `${process.env.NODE_ENV === 'production' ? window.location.href : 'http://localhost'}api/cart`;
+// @TODO: grab the API url from env
+const API_URL = `${process.env.NODE_ENV === 'production' ? window.location.href : 'http://localhost/'}api/cart`;
 
 export function getProducts() {
     return (dispatch) => {
