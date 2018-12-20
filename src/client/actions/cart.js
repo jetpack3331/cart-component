@@ -12,7 +12,7 @@ import {
     SUBMIT_ERROR
 } from '../constants/cart';
 
-const API_URL = 'http://localhost/api/cart';
+const API_URL = process.env.API_URL || 'http://localhost/api/cart';
 
 export function getProducts() {
     return (dispatch) => {
