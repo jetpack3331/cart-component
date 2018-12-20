@@ -19,10 +19,6 @@ app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:htt
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, '/../../build')));
 
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname + '/../../build/index.html'));
-});
-
 // CORS setup
 app.use((req, res, next) => {
     // if we have an options request (preflight), send 200 and set some headers
@@ -60,6 +56,11 @@ app.use(bodyParser.json({
 
 // Routes setup
 app.use('/api/', routes);
+
+// Route for everything else except API
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname + '/../../build/index.html'));
+});
 
 server
     .listen(PORT, () => {
