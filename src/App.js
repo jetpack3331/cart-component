@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 
 import Cart from './client/components/Cart/Cart';
-import 'bootstrap/dist/css/bootstrap.css';
+import './App.scss';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
+      <div className="app">
         <Cart />
       </div>
     );
