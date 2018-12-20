@@ -16,3 +16,8 @@ React, Redux, Axios, Express, Faker
 - `yarn dev` - run the development server
 - `yarn build` = build production build
 - `yarn start` - run Express API and server static files from build and the API
+
+## Deployment to production heroku
+
+- heroku login
+- git push heroku master
