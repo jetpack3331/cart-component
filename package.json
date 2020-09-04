@@ -21,7 +21,7 @@
     "redux-thunk": "^2.3.0",
     "faker": "^4.1.0",
     "morgan": "^1.9.1",
-    "node-sass": "^4.11.0"
+    "node-sass": "^4.13.1"
   },
   "scripts": {
     "dev": "react-scripts start",
